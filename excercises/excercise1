@@ -1,0 +1,56 @@
+boss@boss-Aspire-1650 ~/ratebeer $ rails c
+Loading development environment (Rails 4.0.2)
+irb(main):001:0> b = Beer.first
+  Beer Load (0.4ms)  SELECT "beers".* FROM "beers" ORDER BY "beers"."id" ASC LIMIT 1
+=> #<Beer id: 1, name: "Iso 3", style: "Lager", brewery_id: 1, created_at: "2014-01-19 03:18:24", updated_at: "2014-01-19 03:18:24">
+irb(main):002:0> b.ratings.create score:10
+   (0.1ms)  begin transaction
+  SQL (35.0ms)  INSERT INTO "ratings" ("beer_id", "created_at", "score", "updated_at") VALUES (?, ?, ?, ?)  [["beer_id", 1], ["created_at", Sun, 26 Jan 2014 13:28:20 UTC +00:00], ["score", 10], ["updated_at", Sun, 26 Jan 2014 13:28:20 UTC +00:00]]
+   (111.4ms)  commit transaction
+=> #<Rating id: 1, score: 10, beer_id: 1, created_at: "2014-01-26 13:28:20", updated_at: "2014-01-26 13:28:20">
+irb(main):003:0> b.ratings.create score:21
+   (0.3ms)  begin transaction
+  SQL (0.9ms)  INSERT INTO "ratings" ("beer_id", "created_at", "score", "updated_at") VALUES (?, ?, ?, ?)  [["beer_id", 1], ["created_at", Sun, 26 Jan 2014 13:28:28 UTC +00:00], ["score", 21], ["updated_at", Sun, 26 Jan 2014 13:28:28 UTC +00:00]]
+   (111.1ms)  commit transaction
+=> #<Rating id: 2, score: 21, beer_id: 1, created_at: "2014-01-26 13:28:28", updated_at: "2014-01-26 13:28:28">
+irb(main):004:0> b.ratings.create score:17
+   (1.0ms)  begin transaction
+  SQL (0.9ms)  INSERT INTO "ratings" ("beer_id", "created_at", "score", "updated_at") VALUES (?, ?, ?, ?)  [["beer_id", 1], ["created_at", Sun, 26 Jan 2014 13:28:34 UTC +00:00], ["score", 17], ["updated_at", Sun, 26 Jan 2014 13:28:34 UTC +00:00]]
+   (120.5ms)  commit transaction
+=> #<Rating id: 3, score: 17, beer_id: 1, created_at: "2014-01-26 13:28:34", updated_at: "2014-01-26 13:28:34">
+irb(main):005:0> b.ratings
+  Rating Load (1.1ms)  SELECT "ratings".* FROM "ratings" WHERE "ratings"."beer_id" = ?  [["beer_id", 1]]
+=> #<ActiveRecord::Associations::CollectionProxy [#<Rating id: 1, score: 10, beer_id: 1, created_at: "2014-01-26 13:28:20", updated_at: "2014-01-26 13:28:20">, #<Rating id: 2, score: 21, beer_id: 1, created_at: "2014-01-26 13:28:28", updated_at: "2014-01-26 13:28:28">, #<Rating id: 3, score: 17, beer_id: 1, created_at: "2014-01-26 13:28:34", updated_at: "2014-01-26 13:28:34">]>
+irb(main):006:0> c = Brewery.create
+   (0.1ms)  begin transaction
+  SQL (0.8ms)  INSERT INTO "breweries" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", Sun, 26 Jan 2014 13:41:17 UTC +00:00], ["updated_at", Sun, 26 Jan 2014 13:41:17 UTC +00:00]]
+   (104.2ms)  commit transaction
+=> #<Brewery id: 5, name: nil, year: nil, created_at: "2014-01-26 13:41:17", updated_at: "2014-01-26 13:41:17">
+irb(main):007:0> c.name:IPA
+ArgumentError: wrong number of arguments (1 for 0)
+        from /home/boss/.rbenv/versions/2.0.0-p353/lib/ruby/gems/2.0.0/gems/activerecord-4.0.2/lib/active_record/attribute_methods/read.rb:58:in `__temp__e616d656'
+        from (irb):7
+        from /home/boss/.rbenv/versions/2.0.0-p353/lib/ruby/gems/2.0.0/gems/railties-4.0.2/lib/rails/commands/console.rb:90:in `start'
+        from /home/boss/.rbenv/versions/2.0.0-p353/lib/ruby/gems/2.0.0/gems/railties-4.0.2/lib/rails/commands/console.rb:9:in `start'
+        from /home/boss/.rbenv/versions/2.0.0-p353/lib/ruby/gems/2.0.0/gems/railties-4.0.2/lib/rails/commands.rb:62:in `<top (required)>'
+        from bin/rails:4:in `require'
+        from bin/rails:4:in `<main>'
+irb(main):008:0> c = Brewery.create name:"BrewDog", year:2007
+   (0.4ms)  begin transaction
+  SQL (1.2ms)  INSERT INTO "breweries" ("created_at", "name", "updated_at", "year") VALUES (?, ?, ?, ?)  [["created_at", Sun, 26 Jan 2014 13:44:52 UTC +00:00], ["name", "BrewDog"], ["updated_at", Sun, 26 Jan 2014 13:44:52 UTC +00:00], ["year", 2007]]
+   (101.3ms)  commit transaction
+=> #<Brewery id: 6, name: "BrewDog", year: 2007, created_at: "2014-01-26 13:44:52", updated_at: "2014-01-26 13:44:52">
+irb(main):009:0> c 
+=> #<Brewery id: 6, name: "BrewDog", year: 2007, created_at: "2014-01-26 13:44:52", updated_at: "2014-01-26 13:44:52">
+irb(main):010:0> c.beers.create name:"Punk IPA", style:"IPA"
+   (0.5ms)  begin transaction
+  SQL (4.8ms)  INSERT INTO "beers" ("brewery_id", "created_at", "name", "style", "updated_at") VALUES (?, ?, ?, ?, ?)  [["brewery_id", 6], ["created_at", Sun, 26 Jan 2014 13:47:20 UTC +00:00], ["name", "Punk IPA"], ["style", "IPA"], ["updated_at", Sun, 26 Jan 2014 13:47:20 UTC +00:00]]
+   (118.4ms)  commit transaction
+=> #<Beer id: 11, name: "Punk IPA", style: "IPA", brewery_id: 6, created_at: "2014-01-26 13:47:20", updated_at: "2014-01-26 13:47:20">
+irb(main):011:0> c.beers.create name:"Nanny State", style:"lowalcohol"
+   (0.3ms)  begin transaction
+  SQL (1.1ms)  INSERT INTO "beers" ("brewery_id", "created_at", "name", "style", "updated_at") VALUES (?, ?, ?, ?, ?)  [["brewery_id", 6], ["created_at", Sun, 26 Jan 2014 13:47:47 UTC +00:00], ["name", "Nanny State"], ["style", "lowalcohol"], ["updated_at", Sun, 26 Jan 2014 13:47:47 UTC +00:00]]
+   (93.6ms)  commit transaction
+=> #<Beer id: 12, name: "Nanny State", style: "lowalcohol", brewery_id: 6, created_at: "2014-01-26 13:47:47", updated_at: "2014-01-26 13:47:47">
+irb(main):012:0> 
+                        
