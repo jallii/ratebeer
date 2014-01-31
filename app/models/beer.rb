@@ -1,19 +1,22 @@
 class Beer < ActiveRecord::Base
+ 	include RatingAverage
 	belongs_to :brewery
-	has_many :ratings
+	has_many :ratings, dependent: :destroy
 
 	def to_s
-		@@panimo=Brewery.last 	
-		@@olut= Beer.last
-		"#{panimo.name}  #{olut.brewery.name}"
-	end
+		"#{name} #{brewery.name}"
+	end	
 
-	def average_rating
-		@@b = Beer.first
-		@@c = b.ratings.count
-		@@s = b.ratings.sum("score")
-		puts "#{s/c}"
+#	def to_s (olut:beer)
+#	olut = Beer.last
+#	olut.panimo_id
+#	"#{panimo.name}  #{olut.brewery.name}"
+#	end
 
-	end
+#	def average_rating (*args)
+#	args {|value| sum += value}
+#	return (sum / args.count)
+#	end
+
 end
-re
+
