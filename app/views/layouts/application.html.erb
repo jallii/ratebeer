@@ -11,9 +11,26 @@
 	<%= link_to 'breweriews', breweries_path %>
 	<%= link_to 'beers', beers_path %>
 	<%= link_to 'ratings', ratings_path %>
+	<%= link_to 'users', users_path %>
+	<strong> | </strong>
+	<% if not current_user.nil? %>
+		Signed in as:
+		<%= current_user.username %> 
+		<%= link_to 'rate a beer', new_rating_path %>
+		<%= link_to 'signout', signout_path, method: :delete, data: { confirm: 'Are you sure?' } %>	
+	<%else%>
+		<%= link_to 'login', signin_path %>	
+		<%= link_to 'signup', signup_path %>
+	<% end %>
+
 	</div>
 
 <%= yield %>
-
+	
+<% if session[:last_rating].nil? %>
+<p>no ratings given </p>
+<% else %>
+<p>previous rating:  <%= session[:last_rating] %></p>
+<% end %>
 </body>
 </html>
