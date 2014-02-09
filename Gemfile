@@ -4,13 +4,21 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.2'
 
 group :development, :test do
-  gem 'sqlite3'
+	gem 'sqlite3'
 end
 
 group :production do
-   gem 'pg'
-   gem 'rails_12factor' 
+   	gem 'pg'
+   	gem 'rails_12factor' 
 end
+
+group :test do
+	gem 'rspec-rails', '~> 2.14.1'
+	gem 'factory_girl_rails', '~> 4.0'
+	gem 'capybara'
+	gem 'launchy'
+end
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

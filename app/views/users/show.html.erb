@@ -8,7 +8,7 @@
 </p>
 
 <p> has made <%= pluralize(@user.ratings.count,'rating') %>, 
-Average rating: <%=  @user.ratings.beer.average_rating %> 
+Average rating: <%= @user.ratings.average_rating %> 
 
 </p>
 
@@ -21,10 +21,6 @@ Average rating: <%=  @user.ratings.beer.average_rating %>
  </li>
   <% end %>
 </ul>
-
-
-
-
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

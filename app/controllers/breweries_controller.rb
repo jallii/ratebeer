@@ -62,6 +62,7 @@ class BreweriesController < ApplicationController
     end
   end
 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_brewery
@@ -74,10 +75,17 @@ class BreweriesController < ApplicationController
     end
 
     def authenticate
-      admin_accounts = { "admin" => "secret", "pekka" => "beer", "arto" => "foobar", "matti" => "ittam"}
+      admin_accounts = { "admin" => "Secret1", "pekka" => "Beer1", "arto" => "Barto1", "matti" => "Matti1"}
 
       authenticate_or_request_with_http_basic do |username, password|
         admin_accounts[username] == password
       end
     end
+
+    def ensure_that_signed_in 
+      redirect_to signin_path, notice:'you should be signed in' if current_user.nil?
+    end
+
+
+
 end
