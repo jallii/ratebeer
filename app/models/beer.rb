@@ -1,22 +1,13 @@
 class Beer < ActiveRecord::Base
- 	include RatingAverage
+  include RatingAverage
+
+  validates :name, presence: true
+
 	belongs_to :brewery
-	has_many :ratings, dependent: :destroy
-	has_many :users, through: :ratings
-	def to_s
-		"#{name} #{brewery.name}"
-	end	
+  has_many :ratings, dependent: :destroy
+  has_many :raters, -> { uniq }, through: :ratings, source: :user
 
-#	def to_s (olut:beer)
-#	olut = Beer.last
-#	olut.panimo_id
-#	"#{panimo.name}  #{olut.brewery.name}"
-#	end
-
-#	def average_rating (*args)
-#	args {|value| sum += value}
-#	return (sum / args.count)
-#	end
-
+  def to_s
+    "#{name} #{brewery.name}"
+  end
 end
-

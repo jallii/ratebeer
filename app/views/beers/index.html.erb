@@ -8,7 +8,6 @@
       <th>Brewery</th>
       <th></th>
       <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -17,16 +16,15 @@
       <tr>
         <td><%= link_to beer.name, beer %></td>
         <td><%= beer.style %></td>
-        <td><%= link_to beer.brewery.name, beer %></td>
-         <td><%= link_to 'Edit', edit_beer_path(beer) %></td>
+        <td><%= link_to beer.brewery.name, beer.brewery %></td>
+        <td><%= link_to 'Edit', edit_beer_path(beer) %></td>
         <td><%= link_to 'Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-   <% end %>
+    <% end %>
   </tbody>
 </table>
 
- 
 <br>
 
-<%= link_to 'New Beer', new_beer_path %><br>
-<%= link_to 'List of Breweries', breweries_path %>
+<%= link_to 'New Beer', new_beer_path %>
+
